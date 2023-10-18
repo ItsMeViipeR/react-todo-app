@@ -1,11 +1,11 @@
 "use client";
 
-import React, { FormEvent, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { z } from "zod";
 import AutoForm, { AutoFormSubmit } from "@/components/ui/auto-form";
-import { clsx } from "clsx";
 import { Button } from "@/components/ui/button";
 import { Loader } from "lucide-react";
+import { Tooltip } from 'react-tooltip'
 
 const formSchema = z.object({
   todo: z.string().describe("What's next?")
@@ -22,9 +22,8 @@ type TodoFormResult = {
 };
 
 export default function Home() {
-  const [text, setText] = useState("");
   const [todos, setTodos] = useState([] as Todo[]);
-  const [done, setDone] = useState(false);
+  const [done, _setDone] = useState(false);
   const [loading, setLoading] = useState(true);
 
   const loadTodos = () => {
@@ -48,55 +47,62 @@ export default function Home() {
   }
 
   return (
-    <main>
-      <div className="flex flex-col items-center justify-center min-h-screen">
-        <div className="flex flex-col items-center justify-center py-2">
-          <AutoForm formSchema={formSchema} onSubmit={addTodo}>
-            <AutoFormSubmit />
-          </AutoForm>
-        </div>
-        <div className="flex flex-col items-center justify-center py-2">
-          <div className="flex flex-col">
-            <div className="flex flex-col items-center justify-between w-full px-4 py-2 mb-4 rounded-md">
-              <div className="grid grid-cols-4 gap-1 items-center max-[500px]:grid-cols-2" id="todos">
-                {loading ? (
-                  <Loader className="animate-spin" size={32} />
-                ) : (
-                  todos.map((todo) => (
-                    <div
-                      key={todo.id}
-                      className="flex flex-row items-center justify-between w-full px-4 py-2 mb-4 bg-white border border-gray-300 rounded-md todo"
-                    >
-                      <label className="flex items-center cursor-pointer">
-                        <input
-                          type="checkbox"
-                          className="hidden"
-                          checked={todo.done}
-                          onChange={() => {
-                            const updatedTodos = todos.map((t) => {
-                              if (t.id === todo.id) {
-                                return { ...t, done: !t.done };
-                              }
-                              return t;
-                            });
+    <>
+      <main>
+        <div className="flex flex-col items-center justify-center min-h-screen">
+          <div className="flex flex-col items-center justify-center py-2">
+            <AutoForm formSchema={formSchema} onSubmit={addTodo}>
+              <AutoFormSubmit />
+            </AutoForm>
+          </div>
+          <div className="flex flex-col items-center justify-center py-2">
+            <div className="flex flex-col">
+              <div className="flex flex-col items-center justify-between w-full px-4 py-2 mb-4 rounded-md">
+                <div className="grid grid-cols-4 gap-1 items-center max-[500px]:grid-cols-1" id="todos">
+                  {loading ? (
+                    <Loader className="animate-spin" size={32} />
+                  ) : (
+                    todos.map((todo) => (
+                      <div
+                        key={todo.id}
+                        className="flex flex-row items-center justify-between w-full px-4 py-2 mb-4 bg-white border border-gray-300 rounded-md todo"
+                      >
+                        <label className="flex items-center cursor-pointer">
+                          <input
+                            type="checkbox"
+                            className="hidden"
+                            checked={todo.done}
+                            onChange={() => {
+                              const updatedTodos = todos.map((t) => {
+                                if (t.id === todo.id) {
+                                  return { ...t, done: !t.done };
+                                }
+                                return t;
+                              });
+                              setTodos(updatedTodos);
+                              localStorage.setItem("todos", JSON.stringify(updatedTodos));
+                            }}
+                          />
+                          <div className="custom-checkbox"></div>
+                          <div className="">{todo.text}</div>&nbsp;&nbsp;
+                          <Button variant={"destructive"} size="sm" onClick={() => {
+                            const updatedTodos = todos.filter((t) => t.id !== todo.id);
                             setTodos(updatedTodos);
                             localStorage.setItem("todos", JSON.stringify(updatedTodos));
-                          }}
-                        />
-                        <div className="custom-checkbox"></div>
-                        <div className="">{todo.text}</div>
-                        <Button variant={"ghost"} size="iconSm">
-                          Delete
-                        </Button>
-                      </label>
-                    </div>
-                  ))
-                )}
+                          }} data-tooltip-id={"deleteTooltip"} data-tooltip-content="Delete todo">
+                            X
+                          </Button>
+                        </label>
+                      </div>
+                    ))
+                  )}
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </main>
+      </main>
+      <Tooltip id="deleteTooltip" />
+    </>
   );
 }

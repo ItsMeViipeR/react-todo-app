@@ -21,11 +21,7 @@ export const Header = () => {
               <nav className={"max-[500px]:hidden"}>
                   <ul className={"flex flex-row"}>
                       <li className="ml-8">
-<<<<<<< HEAD
-                          <a href="https://viiper.fr/discord" target={"_blank"} className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition-all">
-=======
-                          <a href="/discord" target={"_blank"} className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition-all">
->>>>>>> origin/master
+                          <a href="https://www.viiper.fr/discord" target={"_blank"} className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition-all">
                               Discord
                           </a>
                       </li>
@@ -45,11 +41,7 @@ export const Header = () => {
             <nav datatype={"nav-mobile"}>
                 <ul className={"flex flex-col items-center"}>
                     <li className={"mb-4 mt-2"}>
-<<<<<<< HEAD
-                        <a href="https://viiper.fr/discord" className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition-all">
-=======
-                        <a href="https://discord.gg/zGk6BvGYx7" className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition-all">
->>>>>>> origin/master
+                        <a href="https://www.viiper.fr/discord" className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition-all">
                             Discord
                         </a>
                     </li>
@@ -63,8 +55,4 @@ export const Header = () => {
           )}
       </header>
     )
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> origin/master
