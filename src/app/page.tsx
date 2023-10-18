@@ -4,7 +4,7 @@ import React, { FormEvent, useEffect, useState } from "react";
 import { z } from "zod";
 import AutoForm, { AutoFormSubmit } from "@/components/ui/auto-form";
 import { clsx } from "clsx";
-import { Checkbox } from "@/components/ui/checkbox";
+import { Button } from "@/components/ui/button";
 import { Loader } from "lucide-react";
 
 const formSchema = z.object({
@@ -58,14 +58,14 @@ export default function Home() {
         <div className="flex flex-col items-center justify-center py-2">
           <div className="flex flex-col">
             <div className="flex flex-col items-center justify-between w-full px-4 py-2 mb-4 rounded-md">
-              <div className="grid grid-cols-4 gap-1 items-center max-[500px]:grid-cols-1" id="todos">
+              <div className="grid grid-cols-4 gap-1 items-center max-[500px]:grid-cols-2" id="todos">
                 {loading ? (
                   <Loader className="animate-spin" size={32} />
                 ) : (
                   todos.map((todo) => (
                     <div
                       key={todo.id}
-                      className="flex flex-row items-center justify-between w-full px-4 py-2 mb-4 bg-white border border-gray-300 rounded-md"
+                      className="flex flex-row items-center justify-between w-full px-4 py-2 mb-4 bg-white border border-gray-300 rounded-md todo"
                     >
                       <label className="flex items-center cursor-pointer">
                         <input
@@ -84,7 +84,10 @@ export default function Home() {
                           }}
                         />
                         <div className="custom-checkbox"></div>
-                        <div className="text-gray-700 font-medium">{todo.text}</div>
+                        <div className="">{todo.text}</div>
+                        <Button variant={"ghost"} size="iconSm">
+                          Delete
+                        </Button>
                       </label>
                     </div>
                   ))
